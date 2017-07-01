@@ -1,0 +1,7 @@
+build/
+dist/
+tmp/
+*.so
+*.zip
+{{ ProjectName }}
+terraform/{{ ProjectName }}-root.tf
