@@ -15,4 +15,5 @@ install-boiler: ## install the boilr binary
 	curl https://raw.githubusercontent.com/tmrts/boilr/master/install | sh
 
 install-template: ## install the boilr-go-lambda template
-	boilr template download github.com/cleardataeng/boilr-go-lambda go-lambda
+	boilr init
+	boilr template download cleardataeng/boilr-go-lambda go-lambda -f
