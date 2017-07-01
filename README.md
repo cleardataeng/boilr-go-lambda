@@ -3,6 +3,15 @@ boilr-go-lambda
 
 boilr-go-lambda is a template for use with [boilr](https://github.com/tmrts/boilr/). With it, you can quickly bootstrap a project with everything you should need to get AWS Lambda up and running with the [aws-lambda-go-shim](https://github.com/eawsy/aws-lambda-go-shim).
 
+Quick Start
+-----------
+
+    make install-boiler
+    make install-template
+    mkdir newproject
+    cd newproject
+    boilr template use go-lambda .
+
 Installation
 ------------
 
