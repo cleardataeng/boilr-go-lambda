@@ -33,6 +33,14 @@ endef
 LAMBDAS := test-lambda
 $(foreach LAMBDA,$(LAMBDAS),$(eval $(call LAMBDA_template,$(LAMBDA))))
 
+ifeq ($(OS),Windows_NT)
+	MKDIR := mkdir
+	FixPath = $(subst /,\,$1)
+else
+	MKDIR := mkdir -p
+	FixPath = $1
+endif
+
 all: bin lambda-arcs ## build binary and lambda distributions
 
 bin: $(BUILD)/$(PROJ_NAME) ## build the main program / cli
@@ -70,12 +78,13 @@ tf-plan: ## show environment state changes
 	terraform plan -refresh=true -state=$(TF)/terraform.tfstate $(TF)/
 
 $(BUILD)/$(PROJ_NAME): ## build the main program / cli
+	$(MKDIR) $(call FixPath,$(TMP))
 	go build -i -v -ldflags=$(LDFLAGS) -o $@
 
 $(DIST)/%.zip: clean-tmp docker-shim ## lambda distribution archive
-	@mkdir -p $(BUILD)/$*
-	@mkdir -p $(DIST)
-	@mkdir -p $(TMP)/handler
+	$(MKDIR) $(call FixPath,$(BUILD)/$*)
+	$(MKDIR) $(call FixPath, $(DIST))
+	$(MKDIR) $(call FixPath, $(TMP)/handler)
 	docker run --rm \
 	  -v $(GOPATH):/go \
 	  -v $(CURDIR):/work \
